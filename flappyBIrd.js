@@ -19,6 +19,7 @@ pipes.innerHTML = '<div id="toppipe"></div><div id="gap"></div><div id="bottompi
 pipes.style.marginLeft = Math.floor(Math.random()*screen.width) + 'px'
 
 document.getElementById('game').appendChild(pipes)
+let birdstyle = bird.currentStyle || window.getComputedStyle(bird) 
 
 const hurdle = document.getElementsByClassName('hurdle')[0]
 let lastanimatedtime = 0
@@ -58,27 +59,29 @@ function main(timestamp){
 function gravity(){
     // velocity = 10*velocity
     
-    let birdstyle = bird.currentStyle || window.getComputedStyle(bird);
+     birdstyle = bird.currentStyle || window.getComputedStyle(bird);
     // let birdheight = parseInt(birdstyle.marginTop.replace('px',''))  
     bird.style.marginTop = distance +'px' 
-    distance = Math.floor(0.03*10*iteration**2)
+    distance = Math.floor(0.01*10*iteration**2)
     iteration++
     // console.log(newheight);
     console.log(iteration);
 }
 
 function flap(){
-    let birdstyle = bird.currentStyle || window.getComputedStyle(bird) 
     let birdheight = parseInt(birdstyle.marginTop.replace('px','')) 
-    bird.style.marginTop = (birdheight - 3) + 'px'; 
+    bird.style.marginTop = (birdheight - 80) + 'px'; 
+    iteration = iteration - 20
+    
+    // bird.style.marginTop = (birdheight - 3) + 'px'; 
     // distance = (distance - 30)   
     // console.log(distance);
-    iteration=-10
+    // iteration=0
 }
 
 
 function checkgameover(){
-    let birdstyle = bird.currentStyle || window.getComputedStyle(bird);
+    birdstyle = bird.currentStyle || window.getComputedStyle(bird);
     let birdheight = parseInt(birdstyle.marginTop.replace('px','')) 
     if( birdheight >= screen.height ){
         gamestop = true
