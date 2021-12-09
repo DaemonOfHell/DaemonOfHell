@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- <html lang="en"> -->
-    <html lang="en" onclick='flap()'>
+    <html lang="en" onclick="flap()">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,8 +13,13 @@
 <body>
     <div id="game">
         <div id="bird"></div>
+        <div id="pipes">
+            <div id="toppipe"></div>
+            <div id="gap"></div>
+            <div id="bottompipe"></div>
+        </div>
     </div>
 
-    <button id='stop'>stop</button>
+    <button id='stop' onclick="stopgame()">stop</button>
 </body>
 </html>
