@@ -1,5 +1,5 @@
 let v = 0;
-let g = 10;
+let g = 30;
 let d = 0;
 console.log(bird);
 let gamestop = false
@@ -16,6 +16,7 @@ function main(timestamp){
     timesincelastrender = timestamp - previousrendertime
 
     window.requestAnimationFrame(main)
+
     if(gamestop){
         return
     }
@@ -27,11 +28,11 @@ function main(timestamp){
 }
 
 function gravity(){
-    d = v*timesincelastrender/1000
+    d = v 
     // bird.style.marginTop = birdstyle.marginTop + 9 + 'px'
-    v = v + g*timesincelastrender
-    bird.style.marginTop = Math.floor(d) + 'px'
-    console.log(timesincelastrender+' : ' +Math.floor(d));
+    v = v + g * timesincelastrender/1000
+    bird.style.marginTop = parseInt(birdstyle.marginTop.replace('px','')) + Math.floor(d) + 'px'
+    console.log(timesincelastrender/1000+' : ' +Math.floor(d));
 }
 
 function stopgame(){
