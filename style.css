@@ -1,0 +1,71 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+#stop {
+  position: absolute;
+  background-color: thistle;
+  padding: 30px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: fit-content;
+  z-index: 22;
+}
+
+#game {
+  width: 100vw;
+  height: 100vh;
+  background-color: #ccc;
+  position: absolute;
+}
+
+#bird {
+  margin-left: 10vw;
+  margin-top: 1px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: yellow;
+  position: absolute;
+  /* transition: all ease; */
+}
+
+.hurdle {
+  /* display: block; */
+  position: absolute;
+  height: 100vh;
+  width: fit-content;
+  border: 3px solid black;
+}
+
+#toppipe {
+  width: 40px;
+  height: 40vh;
+  background-color: green;
+  /* background-image: url("./res/green-pipe.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom; */
+  margin-top: 0;
+}
+#gap {
+  width: 40px;
+  height: 20vh;
+  background-color: transparent;
+}
+#bottompipe {
+  width: 40px;
+  height: 40vh;
+  background-color: rgb(0, 30, 128);
+  /* background-image: url("./res/green-pipe.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; */
+  margin-bottom: 0;
+}
