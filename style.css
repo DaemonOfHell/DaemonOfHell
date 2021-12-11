@@ -23,7 +23,7 @@ body {
   height: 100vh;
   /* background-color: #ccc; */
   /* background-color: steelblue; */
-  background-image: url("./res/bg3.gif");
+  background-image: url("./res/bg1.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -32,7 +32,7 @@ body {
 
 #bird {
   margin-left: 35vw;
-  margin-top: 40vh;
+  margin-top: 1vh;
   width: 15vmin;
   height: 15vmin;
   border-radius: 50%;
@@ -51,31 +51,34 @@ body {
   position: absolute;
   height: 100vh;
   width: 5vw;
+  /* background-color: #afa33a; */
   /* border: 3px solid black; */
 }
 
-#toppipe {
-  width: 40px;
+.toppipe {
+  width: inherit;
   height: 35vh;
-  background-color: darkgreen;
-  background-image: url("./res/green-pipedown.jpg");
-  background-size: cover;
+  /* background-color: darkgreen; */
+  background-image: url("./res/pipe-3d-long2-down.png");
+  background-size: 100%;
   background-repeat: no-repeat;
   background-position: bottom;
+  /* border: 3px solid black; */
   margin-top: 0;
 }
-#gap {
-  width: 40px;
+.gap {
+  width: inherit;
   height: 30vh;
   background-color: transparent;
 }
-#bottompipe {
-  width: 40px;
+.bottompipe {
+  width: inherit;
   height: 35vh;
-  background-color: rgb(0, 30, 128);
-  background-image: url("./res/green-pipeup.jpg");
-  background-size: cover;
+  /* border: 3px solid black; */
+  /* background-color: rgb(0, 30, 128); */
+  background-image: url("./res/pipe-3d-long2-up.png");
+  background-size: 100%;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top;
   margin-bottom: 0;
 }
