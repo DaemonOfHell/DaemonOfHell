@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@700&family=Urbanist:wght@100;200;300&display=swap");
+
 * {
   box-sizing: border-box;
 }
@@ -5,6 +7,7 @@
 body {
   margin: 0;
   overflow: hidden;
+  font-family: "Fuzzy Bubbles", cursive;
 }
 
 #stop {
@@ -29,7 +32,53 @@ body {
   background-position: center;
   position: absolute;
 }
+#score {
+  float: left;
+  font-size: 2rem;
+  z-index: 22;
+  padding: 0.5rem;
+  color: white;
+}
 
+#pauseplay {
+  visibility: hidden;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  vertical-align: middle;
+  display: table-cell;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 23;
+  /* border: 2px solid wheat; */
+  padding: 50vh 50vw 50vh 50vw;
+  /* text-align: center; */
+  padding: 0;
+  margin: 0;
+}
+#pauseplay i {
+  position: absolute;
+  display: block;
+  font-size: 30vh;
+  color: aliceblue;
+  border: 1px solid greenyellow;
+  line-height: 100vh;
+  padding-left: 40%;
+  width: 100%;
+  height: 100%;
+  /* border: 2px solid pink; */
+}
+
+#pauseplay p {
+  color: white;
+  width: 100vw;
+  position: absolute;
+  line-height: 10vh;
+  margin-top: 30%;
+  /* border: 2px solid peru; */
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+}
 #bird {
   margin-left: 35vw;
   margin-top: 1vh;
@@ -81,4 +130,60 @@ body {
   background-repeat: no-repeat;
   background-position: top;
   margin-bottom: 0;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+}
+
+#gameoverscreen {
+  visibility: hidden;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 24;
+  /* border: 2px solid rgb(7, 7, 6); */
+  /* padding: 50vh 50vw 50vh 50vw; */
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  /* vertical-align: middle;
+  display:table-cell; */
+}
+#gameoverscreen #scorediv {
+  vertical-align: middle;
+  display: table-cell;
+  width: 100vw;
+  height: 70vh;
+  color: coral;
+  /* border: 2px solid lawngreen; */
+  line-height: 0;
+}
+#gameoverscreen #scorediv h1 {
+  font-size: 10rem;
+}
+#gameoverscreen #scorediv p {
+  font-size: 3rem;
+}
+#gameoverscreen #replaydiv {
+  /* vertical-align: middle; */
+  display: table-row;
+  width: 100vw;
+  height: 30vh;
+  /* border: 2px solid lawngreen; */
+  color: #551a8b;
+  line-height: 0;
+}
+#gameoverscreen #replaydiv span {
+  font-size: 3rem;
+}
+#gameoverscreen #replaydiv p {
+  font-size: 1.3rem;
+  font-weight: 800;
 }

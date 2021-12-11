@@ -1,3 +1,6 @@
+let score = 0
+let cleared = null
+
 let v = 0;
 let g = 20;
 let d = 0;
@@ -5,9 +8,20 @@ let f = 108;  // force of 1 flap in newton
 let m = .5;  // mass of bird in kg
 
 const bgm = new Audio('./res/sounds/bgm.ogg')
-// const sfx_flap = new Audio('./res/sounds/flap2.wav')
-const sfx_gasp = new Audio('./res/sounds/gasp-boy.mp3')
+const sfx_coin = new Audio('./res/sounds/mariocoin.mp3')
+const sfx_gasp = new Audio('./res/sounds/metalclunk.wav')
 const sfx_fall = new Audio('./res/sounds/cartoonfall3.wav')
+
+const gamestate = {
+    birdvelocity: 0,
+    flapping: false,
+    birdpositionMT: null,
+    pipe1positionML: null,
+    pipe2positionML: null,
+    score: 0,
+    timesincelastrender: 0
+    // bgmCurrentTime: 0
+}
 
 bgm.play()
 
@@ -19,7 +33,8 @@ let flaptime = flapend - flapstart
 
 // console.log(bird);
 let gamestop = false 
-
+let gamepause = false
+let gameover = false
  
 // let startrendertime = 0
 let previousrendertime
@@ -45,6 +60,7 @@ const toppipes = document.getElementsByClassName('toppipe')
 const gap = document.getElementsByClassName('gap') 
 const bottompipes = document.getElementsByClassName('bottompipe') 
 
+//----------------main func --------------------
 function main(timestamp){
     const hurdle = document.getElementsByClassName('hurdle') 
  
@@ -53,33 +69,56 @@ function main(timestamp){
     }
     timesincelastrender = (timestamp - previousrendertime)/1000
    
-    let reqframe = window.requestAnimationFrame(main) 
+    //fill the gamestate buffer for pausing and resuming
+    gamestate.birdpositionMT = bird.getBoundingClientRect().top + 'px'
+    gamestate.pipe1positionML = pipes.getBoundingClientRect().left + 'px'
+    gamestate.pipe2positionML = pipes2.getBoundingClientRect().left + 'px'
+    gamestate.score = score
+    gamestate.timesincelastrender = timesincelastrender 
+    gamestate.birdvelocity = v
+    gamestate.flapping = (flaptime > 0)?true:false
+    // gamestate.bgmCurrentTime = bgm.currentTime
 
-    if(gamestop){
-        bgm.pause()  
+    let reqframe = window.requestAnimationFrame(main) 
+    if(gameover){
+        bgm.pause()    
+        stopgame()
+        document.getElementById('gameoverscreen').style.visibility = 'revert';
+        window.cancelAnimationFrame(reqframe) 
+    return
+    }
+    else if(gamestop){
+        bgm.pause()    
+        stopgame()
+        document.getElementById('pauseplay').style.visibility = 'revert';
         window.cancelAnimationFrame(reqframe)
-        if(confirm('game over. Retry ?')){
-            window.location = '/'
-        }else{
-            return
-        } 
+        // if(confirm('game over. Retry ?')){
+        //     window.location = '/'
+        // }else{
+        //     return
+        // } 
+    }
+    
+    else if(gamepause){
+          document.getElementById('pauseplay').style.visibility = 'revert';
+          stopgame()
     }
     else if(pipes.getBoundingClientRect().right < 0){
          
-        console.log('looping'); 
+        // console.log('looping'); 
         toppipes[0].style.height = Math.floor(Math.random()*screen.height/2) + 'px'
         bottompipes[0].style.height = screen.height - gap[0].style.height - toppipes[0].getBoundingClientRect().bottom + 'px'
         hurdle[0].style.marginLeft = screen.width+'px'
     }
     else if(pipes2.getBoundingClientRect().right < 0){
         toppipes[1].style.height = Math.floor(Math.random()*screen.height/2) + 'px'
-        console.log('looping'); 
+        // console.log('looping'); 
         bottompipes[1].style.height = screen.height - gap[1].getBoundingClientRect().bottom + 'px'
         hurdle[1].style.marginLeft = screen.width+'px'
     }
 
-    hurdle[0].style.marginLeft = parseInt(pipes.style.marginLeft.replace('px','')) - 2 +'px'
-    hurdle[1].style.marginLeft = parseInt(pipes2.style.marginLeft.replace('px','')) - 2 +'px'
+    hurdle[0].style.marginLeft = parseInt(pipes.style.marginLeft.replace('px','')) - 4 +'px'
+    hurdle[1].style.marginLeft = parseInt(pipes2.style.marginLeft.replace('px','')) - 4 +'px'
 
     if(flaptime > 0){
         v = gravity() + flap()  
@@ -97,7 +136,7 @@ function main(timestamp){
 function gravity(){ 
     d = Math.floor(v)  
     v = v + g * timesincelastrender
-    console.log(timesincelastrender+': '+d);
+    // console.log(timesincelastrender+': '+d);
     bird.style.marginTop = parseInt(birdstyle.marginTop.replace('px','')) + d + 'px'  
 return v
 }
@@ -110,60 +149,127 @@ return v
 }
 
 function stopgame(){
-    gamestop = true
+    gamestop = true 
+}
+
+function pauseplay(){
+    gamepause = gamepause?false:true
+    if(gamepause){
+        gamestop = true
+        console.log('pausing game');
+    }else{
+        console.log('resuming game');
+        document.getElementById('pauseplay').style.visibility='hidden'
+        // gamestate.bgmCurrentTime = bgm.currentTime
+        bgm.play()
+         v = parseInt(gamestate.birdvelocity)
+         flaptime = (gamestate.flapping)?1:0
+        // flap()
+         bird.style.marginTop = gamestate.birdpositionMT
+         pipes.style.marginLeft = gamestate.pipe1positionML
+         pipes2.style.marginLeft = gamestate.pipe2positionML
+         score  = gamestate.score 
+         timesincelastrender = gamestate.timesincelastrender
+         previousrendertime = undefined
+        console.log(previousrendertime);
+        gamestop = false
+
+        setTimeout(window.requestAnimationFrame(main), 2000)
+    }
+    console.log('game paused:'+gamepause);
 }
 
 function checkgameover(){
  
     if(parseInt(birdstyle.marginTop.replace('px','')) > screen.height){ 
         sfx_fall.play()
-        gamestop = true
-        document.getElementById('game').innerHTML = 'gameover' 
+        // gamestop = true
+        gameover = true
+        // document.getElementById('game').innerHTML = 'gameover' 
     } 
-    collision()
+    
+    collision() 
 }
 
 function collision(){ 
-
+    // const hurdle = document.getElementsByClassName('hurdle')
     let birdrect = bird.getBoundingClientRect()
-        
+
     let pipe1top = toppipes[0].getBoundingClientRect();
     let pipe2top = toppipes[1].getBoundingClientRect();
-    
+ 
     let pipe1bottom = bottompipes[0].getBoundingClientRect();
     let pipe2bottom = bottompipes[1].getBoundingClientRect();
     
     console.log(birdrect.height, birdrect.width); 
-        if(birdrect.top + birdrect.width/3 < pipe1top.bottom && birdrect.right - birdrect.width/3 > pipe1top.left &&
+        if(birdrect.top + birdrect.width/3 < pipe1top.bottom && 
+            birdrect.right - birdrect.width/3 > pipe1top.left &&
             birdrect.left + birdrect.width/3 < pipe1top.right ){  
-            gamestop = true
             sfx_gasp.play()
+                 gameover = true
         }
-        else if(birdrect.top + birdrect.width/3 < pipe2top.bottom && birdrect.right - birdrect.width/3 > pipe2top.left &&
-            birdrect.left + birdrect.width/3 < pipe2top.right ){  
-            gamestop = true
+        else if(birdrect.top + birdrect.width/3 < pipe2top.bottom && 
+                birdrect.right - birdrect.width/3 > pipe2top.left &&
+                birdrect.left + birdrect.width/3 < pipe2top.right ){  
             sfx_gasp.play()
+                  gameover = true
         } 
-        else if(birdrect.bottom - birdrect.width/3 > pipe1bottom.top && birdrect.right - birdrect.width/3 > pipe1bottom.left &&
-            birdrect.left + birdrect.width/3 < pipe1bottom.right ){  
-            gamestop = true
+        else if(birdrect.bottom - birdrect.width/3 > pipe1bottom.top && 
+                birdrect.right - birdrect.width/3 > pipe1bottom.left &&
+                birdrect.left + birdrect.width/3 < pipe1bottom.right ){  
             sfx_gasp.play()
+                  gameover = true
         }
-        else if(birdrect.bottom - birdrect.width/3 > pipe2bottom.top && birdrect.right - birdrect.width/3 > pipe2bottom.left &&
-            birdrect.left + birdrect.width/3 < pipe2bottom.right ){  
-            gamestop = true
+        else if(birdrect.bottom - birdrect.width/3 > pipe2bottom.top && 
+                birdrect.right - birdrect.width/3 > pipe2bottom.left &&
+                birdrect.left + birdrect.width/3 < pipe2bottom.right ){  
             sfx_gasp.play()
-        }
-      
+                  gameover = true 
+        }   
+updateScore()
+}
+
+function updateScore(){
+    let birdrect = bird.getBoundingClientRect()
+
+    let gap1 = gap[0].getBoundingClientRect()
+    let gap2 = gap[1].getBoundingClientRect()
+
+    if(birdrect.right - birdrect.width/3 < gap1.left && cleared === null){
+        cleared = 0
+    }
+    else if(birdrect.right - birdrect.width/3 > gap1.left && cleared === 0){
+        cleared = 1
+    }
+    else if(birdrect.left + birdrect.width/3 > gap1.right && cleared === 1){
+        cleared = 2
     }
 
+    if(birdrect.right - birdrect.width/3 < gap2.left && cleared === null){
+        cleared = 10
+    }
+    else if(birdrect.right - birdrect.width/3 > gap2.left && cleared === 10){
+        cleared =  11
+    }
+    else if(birdrect.left + birdrect.width/3 > gap2.right && cleared === 11){
+        cleared = 12
+    }
+
+    else if(cleared === 2 || cleared === 12){
+        console.log('in cleared');
+        score++
+        document.getElementById('score').innerHTML = 'Score: '+ score
+        document.getElementById('finalscore').innerHTML = score
+        cleared = null 
+        sfx_coin.play()
+    }
+}
 
 window.requestAnimationFrame(main)
 
 window.addEventListener('mousedown',()=>{
     flapstart = new Date().getMilliseconds
-    // flapping = true
-     sfx_flap.play()
+    flap()
 }) 
 
 window.addEventListener('mouseup',()=>{
@@ -171,4 +277,10 @@ window.addEventListener('mouseup',()=>{
     flapend = new Date().getMilliseconds
     // f = 2
     // flapping = false
+})
+
+window.addEventListener('keydown',e=>{
+    if(e.keyCode == 32){
+        pauseplay()
+    }
 })

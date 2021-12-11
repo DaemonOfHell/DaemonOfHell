@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <!-- <html lang="en"> -->
-    <html lang="en" onclick="flap()">
+    <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <script src="flappyBIrd.js" defer></script>
 
     <title>flappy bird</title>
 </head>
 <body>
     <div id="game">
+        <div id="score" class="noselect">Score: 0</div>
+        <div id="gameoverscreen" class="noselect">
+            <div id="scorediv">
+                <h1 id="finalscore">0</h1>
+                <p>score</p>
+            </div>
+            <!-- <p id="gameovertext">Game Over</p> -->
+            <div id="replaydiv">
+                <span><a href="/"><i class="fas fa-undo"></i></a></span>
+                <p>Replay</p>
+            </div> 
+
+        </div>
         <div id="bird"></div>
-        <!-- <div id="pipes">
-            <div id="toppipe"></div>
-            <div id="gap"></div>
-            <div id="bottompipe"></div>
-        </div> -->
+        <div id="pauseplay" onclick="pauseplay()" class="noselect">
+            <i class="fas fa-play"></i>
+            <p>paused..</p>
+        </div>
+      
     </div>
 
     <button id='stop' onclick="stopgame()">stop</button>
