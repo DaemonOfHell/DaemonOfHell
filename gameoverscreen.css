@@ -1,0 +1,122 @@
+#game .status {
+  font-size: 5.6vw;
+  width: 20%;
+  margin: 0 auto;
+  text-align: center;
+  letter-spacing: -3px;
+  color: white;
+  text-shadow: 2px 2px 7px black;
+}
+
+#game .summary {
+  margin: 0 auto;
+  margin-top: 2.3rem;
+  width: 350px;
+  height: 180px;
+  background-color: #dbd894;
+  border-radius: 20px;
+  position: relative;
+  font-size: 1.6rem;
+  font-weight: 100;
+  color: coral;
+  letter-spacing: 2px;
+}
+
+.summary .medal {
+  width: 65%;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  display: inline-block;
+  text-align: left;
+  padding: 0% 0 0% 12%;
+}
+.medal .badge {
+  width: 4.5rem;
+  height: 4.5rem;
+  top: 38%;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #d3cd8c;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.summary .scores {
+  width: 35%;
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  padding-top: 7%;
+  padding-right: 7%;
+}
+.summary .scores span {
+  height: 10px;
+  display: block;
+}
+.scores .currentscore {
+  height: 40%;
+  position: relative;
+}
+.currentscore .currentscorenumber {
+  color: white;
+  font-size: 3.4rem;
+  text-shadow: 0 0 3px black;
+  position: absolute;
+  right: 0;
+  margin-top: 5px;
+}
+
+.scores .bestscore {
+  position: relative;
+  height: 50%;
+}
+
+.scores .bestscore .bestscorenumber {
+  color: white;
+  font-size: 3.4rem;
+  text-shadow: 0 0 3px black;
+  margin-top: 5px;
+  right: 0;
+}
+
+#game .menu {
+  height: 13%;
+  width: 380px;
+  margin: 0 auto;
+  margin-top: 6%;
+  position: relative;
+}
+
+#game .menu .playbtn,
+#game .menu .exitbtn,
+#game .menu .highscoresbtn {
+  width: 90px;
+  height: 100%;
+  background-color: white;
+  border-radius: 10px;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 3px solid black;
+}
+#game .menu .playbtn {
+  background-image: url("../res/icons/play.png");
+  left: 0px;
+  background-size: 50%;
+}
+
+#game .menu .exitbtn {
+  background-image: url("../res/icons/exit.png");
+  margin-left: 50%;
+  transform: translateX(-50%);
+  background-size: 45%;
+}
+
+#game .menu .highscoresbtn {
+  right: 0;
+  background-image: url("../res/icons/highscores.png");
+  background-size: 80%;
+}
