@@ -215,7 +215,7 @@ function restart() {
   setTimeout(() => {
     score = 0;
     document.getElementById("score").innerHTML = score;
-    document.getElementById("finalscore").innerHTML = score;
+    document.getElementById("currentscorenumber").innerHTML = score;
     score = 1;
     bgm.currentTime = 0;
     bgm.play();
