@@ -6,7 +6,7 @@ let GAME_SPEED = 4;
 let GAME_BONUS = 0;
 let cleared = null;
 
-let v = 0; //net velocity of bird / second
+let v = 0; //net velocity of bird
 const g = 10; //acc due to gravity
 let d = 0; //net distance travelled in y axis by bird / second wrt flap and gravity
 const f = 158; // force of 1 flap
